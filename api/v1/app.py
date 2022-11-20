@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 ''' Flask app '''
-from flask import Flask
-from os import getenv
 from api.v1.views import app_views
+from flask import Flask, jsonify
 from models import storage
+from os import getenv
 
 
 HBNB_API_HOST = getenv('HBNB_API_HOST')
@@ -16,6 +16,12 @@ app.register_blueprint(app_views)
 def teardown(exception):
     ''' close app after each session '''
     storage.close()
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    ''' handle page not found error '''
+    return jsonify({"error": "Not found"})
 
 
 if __name__ == '__main__':
