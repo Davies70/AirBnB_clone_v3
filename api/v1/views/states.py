@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-''' endpoint for State object requests '''
+'''view for State objects that handles all default RESTFUL API actions'''
 
 from models.state import State
 from models import storage
