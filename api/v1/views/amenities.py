@@ -17,7 +17,7 @@ def get_and_post_amenity():
         amenity_list = []
         for value in amenity_obj.values():
             amenity_list.append(value.to_dict())
-        return amenity_list
+        return jsonify(amenity_list)
 
     if request.method == 'POST':
         content_type = request.headers.get('Content-Type')
@@ -25,9 +25,7 @@ def get_and_post_amenity():
             body = request.get_json()
             if 'name' in body:
                 new_amenity = Amenity(**body)
-                storage.new(new_amenity)
-                storage.save()
-                return make_response(new_amenity.to_dict(), 201)
+                return make_response(jsonify(new_amenity.to_dict()), 201)
             else:
                 abort(400, description='Missing name')
         else:
@@ -42,7 +40,7 @@ def get_del_post_amenity(amenity_id):
         amenity_obj = storage.get(Amenity, amenity_id)
         if amenity_obj is None:
             abort(404)
-        return amenity_obj.to_dict()
+        return jsonify(amenity_obj.to_dict())
 
     if request.method == 'DELETE':
         amenity_obj = storage.get(Amenity, amenity_id)
