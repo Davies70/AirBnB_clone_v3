@@ -12,7 +12,7 @@ from models.user import User
 @app_views.route('/cities/<city_id>/places', methods=['GET', 'POST'],
                  strict_slashes=False)
 def place_by_city(city_id):
-    ''' get and post place object '''
+    '''get and post place object'''
     if request.method == 'GET':
         city_obj = storage.get(City, city_id)
         place_list = []
@@ -32,8 +32,7 @@ def place_by_city(city_id):
             body = request.get_json()
             if 'user_id' not in body:
                 abort(400, description='Missing user_id')
-            user_id = body.get('user_id')
-            user_obj = storage.get(User, user_id)
+            user_obj = storage.get(User, body[user_id])
             if user_obj is None:
                 abort(404)
             if 'name' not in body:
