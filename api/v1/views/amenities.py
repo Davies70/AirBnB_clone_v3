@@ -12,6 +12,8 @@ def get_and_post_amenity():
     ''' get and post actions '''
     if request.method == 'GET':
         amenity_obj = storage.all(Amenity)
+        if amenity_obj is None:
+            abort(404)
         amenity_list = []
         for value in amenity_obj.values():
             amenity_list.append(value.to_dict())
@@ -23,6 +25,8 @@ def get_and_post_amenity():
             body = request.get_json()
             if 'name' in body:
                 new_amenity = Amenity(**body)
+                storage.new(new_amenity)
+                storage.save()
                 return make_response(new_amenity.to_dict(), 201)
             else:
                 abort(400, description='Missing name')
