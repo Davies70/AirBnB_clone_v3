@@ -25,6 +25,8 @@ def get_and_post_amenity():
             body = request.get_json()
             if 'name' in body:
                 new_amenity = Amenity(**body)
+                storage.new(new_amenity)
+                storage.save()
                 return make_response(jsonify(new_amenity.to_dict()), 201)
             else:
                 abort(400, description='Missing name')
