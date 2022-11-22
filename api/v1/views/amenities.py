@@ -3,7 +3,7 @@
 
 from api.v1.views import app_views
 from models import storage
-from flask import abort, jsonify, make_response. request
+from flask import abort, jsonify, make_response, request
 from models.amenity import Amenity
 
 
@@ -52,7 +52,8 @@ def get_del_post_amenity(amenity_id):
         amenity_obj = storage.get(Amenity, amenity_id)
         if amenity_obj is None:
             abort(404)
-        if content_type = 'application/json':
+        content_type = request.headers.get('Content-Type')
+        if content_type == 'application/json':
             body = request.get_json()
             banned_keys = ['id', 'created_at', 'updated_at']
             for key, value in body.items():
