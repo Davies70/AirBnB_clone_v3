@@ -32,7 +32,8 @@ def place_by_city(city_id):
             body = request.get_json()
             if 'user_id' not in body:
                 abort(400, description='Missing user_id')
-            user_obj = storage.get(User, body.get('user_id'))
+            user_id = body.get('user_id')
+            user_obj = storage.get(User, user_id)
             if user_obj is None:
                 abort(404)
             if 'name' not in body:

@@ -29,6 +29,8 @@ def get_and_post_user():
                 abort(400, description='Missing password')
             else:
                 new_user = User(**body)
+                storage.new(new_user)
+                storage.save()
                 return make_response(jsonify(new_user.to_dict()), 201)
         else:
             abort(400, description='Not a JSON')
