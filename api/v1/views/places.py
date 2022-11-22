@@ -48,7 +48,7 @@ def place_by_city(city_id):
 
 @app_views.route('/places/<place_id>', methods=['GET', 'PUT', 'DELETE'],
                  strict_slashes=False)
-def place_by_id(city_id):
+def place_by_id(place_id):
     ''' get, delete, and put place objects '''
     if request.method == 'GET':
         place_obj = storage.get(Place, place_id)
